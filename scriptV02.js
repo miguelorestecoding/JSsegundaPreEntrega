@@ -2,8 +2,12 @@
 let impuestosAlDolar = [];
 let tiposDeDolar = [];
 let textoListaImpuestosAgregados = `Impuestos Definidos:\n`;
+let textoListaDolaresAgregados = `Dolares Disponibles para calcular su valor:\n`;
+let opcionImpuesto = ""
 let factorTotal = 0;
 
+
+// Clases
 class ImpuestosAlDolar {
   constructor(nombre, factor) {
     this.nombre = nombre;
@@ -18,13 +22,7 @@ class TiposDeDolar {
   }
 }
 
-// seguir desde aca, que al tocar 1 o 2 o 3 se vaya sumando el factor del impuesto a la variable factor total.
-let opcionImpuesto = ""
-function traeFactorImpuesto(opcionImpuesto) {
-let agregaFactor = impuestosAlDolar[opcionImpuesto-1].factor
-console.log(agregaFactor)
-return agregaFactor
-}
+//Definición de Funciones
 
 function menuPrincipal() {
   let opcionMenuPrincipal = "";
@@ -50,9 +48,12 @@ function menuPrincipal() {
       menuPrincipal();
       break;
     case 3:
-      sumaImpuestosAlDolar();
+      creaTipoDeDolar();
+      menuPrincipal()
       break;
     case 4:
+    alert(mostrarTiposDeDolar(tiposDeDolar))
+    menuPrincipal()
       break;
     case 5:
       break;
@@ -92,17 +93,29 @@ function mostrarTiposDeImpuestos(impuestosAlDolar) {
   return textoListaImpuestosAgregados;
 }
 
+function traeFactorImpuesto(opcionImpuesto) {
+    let agregaFactor = impuestosAlDolar[opcionImpuesto-1].factor
+    console.log(agregaFactor)
+    return agregaFactor
+    }
+
 function sumaImpuestosAlDolar() {
   opcionImpuesto = prompt(
-    `Ingresa que impuestos se aplican al dolar que estas creando (Cancelar para Terminar):\n\n*** Por ahora, tu factor total es de: ${factorTotal}\n\n ${mostrarTiposDeImpuestos(impuestosAlDolar)}`
+    `Ingresa que impuestos se aplican al dolar que estas creando. Presiona *Cancelar* para cancelar la creación *OK* para finalizar:\n
+    *** Por ahora, tu factor total es de: ${factorTotal}\n ${mostrarTiposDeImpuestos(impuestosAlDolar)}`
   );
 
   if (opcionImpuesto === null) {
-    alert("⛔ Agregando Impustos a un Tipo de Dolar que estas creando has pulsado Cancelar, volverás al Menu Principal.")
+    alert("⛔ Agregando Impuestos has cancelado la creación de este tipo de Dolar. Vuelves al Menu Principal!")
     menuPrincipal()
 }
 
 opcionImpuesto = parseInt(opcionImpuesto)
+
+if (opcionImpuesto < 0 || opcionImpuesto > impuestosAlDolar.length) {
+    alert("El Valor Ingresado No es Válido. Por favor ingresa un valor Valido")
+    sumaImpuestosAlDolar()
+}
 
   while (opcionImpuesto >= 0 && opcionImpuesto <= impuestosAlDolar.length) {
     factorTotal += traeFactorImpuesto(opcionImpuesto)
@@ -112,6 +125,33 @@ opcionImpuesto = parseInt(opcionImpuesto)
   return factorTotal
 }
 
+function creaTipoDeDolar() {
+    let nombreDeDolar = prompt(
+      "Ingrese el nombre del Dolar que desea Crear!"
+    );
+
+    sumaImpuestosAlDolar()
+  
+    let dolarACrear = new TiposDeDolar(
+      nombreDeDolar,
+      factorTotal
+    );
+    alert(`Es creado un nuevo tipo de Dolar llamado "${nombreDeDolar}" que que es un %${factorTotal * 100} mas caro que el Dolar Oficial Banco Nación. En la opción X del Menu Principal podrás ahora calcular su valor.`)
+    tiposDeDolar.push(dolarACrear);
+    console.log(tiposDeDolar)
+    factorTotal = 0;
+  }
+
+  function mostrarTiposDeDolar(tiposDeDolar) {
+    for (const dolar of tiposDeDolar) {
+      textoListaDolaresAgregados += `\n------------------------------\n**Orden**: ${
+        tiposDeDolar.indexOf(dolar) + 1
+      }\n**Nombre**: ${dolar.nombre}\n**Factor**: ${dolar.factor}`;
+    }
+    return textoListaDolaresAgregados;
+  }
+
+//Función de Ejecución
 function main() {
   menuPrincipal();
 }
