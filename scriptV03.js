@@ -142,7 +142,7 @@ function creaTipoDeDolar() {
   let dolarACrear = new TiposDeDolar(nombreDeDolar, factorTotal + 1);
   alert(
     `Es creado un nuevo tipo de Dolar llamado "${nombreDeDolar}" que que es un %${
-      (factorTotal - 1) * 100
+      factorTotal * 100
     } mas caro que el Dolar Oficial Banco Nación. En la opción X del Menu Principal podrás ahora calcular su valor.`
   );
   tiposDeDolar.push(dolarACrear);
