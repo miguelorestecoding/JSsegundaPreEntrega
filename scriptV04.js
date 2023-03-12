@@ -45,20 +45,41 @@ function menuPrincipal() {
       menuPrincipal();
       break;
     case 2:
-      alert(mostrarTiposDeImpuestos(impuestosAlDolar));
-      menuPrincipal();
+      if (impuestosAlDolar.length == 0) {
+        alert(
+          `🤐 Aun no tienes impuestos Generados.\n👉 Ve a la opción 1 para crear los impuestos.`
+        );
+        menuPrincipal();
+      } else {
+        alert(mostrarTiposDeImpuestos(impuestosAlDolar));
+        menuPrincipal();
+      }
       break;
     case 3:
       creaTipoDeDolar();
       menuPrincipal();
       break;
     case 4:
-      alert(mostrarTiposDeDolar(tiposDeDolar));
-      menuPrincipal();
+      if (tiposDeDolar.length == 0) {
+        alert(
+          `🤐 Aun no has creado tipos de Dolar.\n👉 Ve a la opción 3 para crearlos.`
+        );
+        menuPrincipal();
+      } else {
+        alert(mostrarTiposDeDolar(tiposDeDolar));
+        menuPrincipal();
+      }
       break;
     case 5:
-      cotizadorDeDolares();
-      menuPrincipal();
+      if (tiposDeDolar.length == 0) {
+        alert(
+          `🤐 Aun no has creado tipos de Dolar.\nVe a la opción 3 para crearlos.`
+        );
+        menuPrincipal();
+      } else {
+        cotizadorDeDolares();
+        menuPrincipal();
+      }
       break;
     case 6:
       alert(
@@ -79,13 +100,32 @@ function agregarTipoDeImpuestos() {
   let nombreDeImpuesto = prompt(
     "💱 Ingrese el nombre del impuesto que desea agregar"
   );
-  let factorDelImpuesto = prompt("💱 Ingrese el porcentaje del impuesto");
 
-  let impuestoACrear = new ImpuestosAlDolar(
-    nombreDeImpuesto,
-    parseFloat(parseInt(factorDelImpuesto) / 100)
-  );
-  impuestosAlDolar.push(impuestoACrear);
+  if (nombreDeImpuesto == null) {
+    11;
+    alert(
+      "⛔ Creando Impuestos has presionado Cancelar, vuelves al Menu Principal!"
+    );
+  } else if (nombreDeImpuesto == "") {
+    alert("⛔ Por Favor ingresa un nombre valido de impuesto!");
+    agregarTipoDeImpuestos();
+  } else {
+    let factorDelImpuesto = prompt("💱 Ingrese el porcentaje del impuesto");
+    if (factorDelImpuesto == null) {
+      alert(
+        "⛔ Agregando el factor a tu impuesto has presionado Cancelar, vuelves al Menu Principal!"
+      );
+    } else if (isNaN(parseInt(factorDelImpuesto))) {
+      alert("⛔ Por Favor ingresa un factor valido de impuesto!");
+      agregarTipoDeImpuestos();
+    } else {
+      let impuestoACrear = new ImpuestosAlDolar(
+        nombreDeImpuesto,
+        parseFloat(parseInt(factorDelImpuesto) / 100)
+      );
+      impuestosAlDolar.push(impuestoACrear);
+    }
+  }
 }
 
 //Mostrar tipos de Impuestos
@@ -184,7 +224,7 @@ function muestraPanelDeOpciones() {
   opcion = prompt(
     `*** DOLAR OFICIAL INGRESADO: $${dolarOficialIngresado}\n Selecciona qué tipo de Dólar quieres calcular:\n${tiposDeDolar
       .map((tipo, index) => `${index + 1} ${tipo.nombre}`)
-      .join("\n")}\n${tiposDeDolar.length + 1} Salir de la aplicación`
+      .join("\n")}\n${tiposDeDolar.length + 1} Volver al Menú Principal`
   );
 
   if (opcion === null) {
