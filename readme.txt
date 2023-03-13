@@ -11,4 +11,6 @@ PASO 2: Crear los tipos de Dolares existentes desde la opcion 3. Algunos ejemplo
 - Dolar Netflix: se aplican impuesto PAIS y 45% de Adelanto de Ganancias
 - DOlar Qatar: se aplican impuesto PAIS, 45% de Adelanto de Ganancias y 25% de Adelanto de BienesPersonales
 
-Con la opcion 4 se puden consultar los tipos de Dolar creados y que impuestos se les aplica. 
+Con la opcion 4 se pueden consultar los tipos de Dolar creados y que impuestos se les aplica. 
+
+Con la opción 5 se pueden consultar los precios de los dólares creados. 
